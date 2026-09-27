@@ -1,7 +1,10 @@
 \documentclass{article}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{amsmath}
-\usepackage{url}
+\usepackage{booktabs}
+\usepackage{natbib}
+\usepackage{float}
 
 \title{Relatório — Lista 01}
 \author{Vinicius Viroli Pereira}
@@ -11,47 +14,82 @@
 
 \maketitle
 
-\section{Variável escolhida}
-A variável utilizada nesta atividade foi a \textbf{Temperatura}, presente no arquivo
-\texttt{dados.csv}. Ela representa a temperatura média registrada em cada mês.
+\section{Dados e variável escolhida}
+
+Os dados utilizados nesta atividade estão no arquivo \texttt{dados.csv}, que contém
+medições mensais de diferentes variáveis meteorológicas. A variável escolhida foi
+\textbf{Temp}, que representa a temperatura média registrada em cada mês.
+
+O arquivo possui um total de $n$ observações (uma por mês) e pode conter valores
+faltantes (\texttt{NA}) na variável \textbf{Temp}, que são tratados pelo script
+\texttt{resumo.sh}.
 
 \section{Resumo estatístico}
-O script \texttt{resumo.sh} calcula a média da variável utilizando a fórmula:
 
+O script \texttt{resumo.sh} calcula o resumo da variável \textbf{Temp} e grava os
+resultados no arquivo \texttt{resumo.txt}. A média é calculada pela fórmula:
 
-
-\[
+\begin{equation}
+\label{eq:media}
 \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
-\]
+\end{equation}
 
+Na Equação~\eqref{eq:media}, o denominador $n$ representa o número de valores
+\textbf{não faltantes} da variável \textbf{Temp}, ou seja, os \texttt{NA} são
+excluídos do cálculo.
 
+A Tabela~\ref{tab:resumo} apresenta o resumo estatístico obtido a partir do
+arquivo \texttt{resumo.txt}.
 
-Os resultados são salvos no arquivo \texttt{resumo.txt}, que contém os valores
-calculados automaticamente a partir dos dados originais.
+\begin{table}[H]
+  \centering
+  \caption{Resumo estatístico da variável Temp}
+  \label{tab:resumo}
+  \begin{tabular}{lrrrr}
+    \toprule
+    Medida & Valor \\
+    \midrule
+    % Substitua as linhas abaixo pelos valores do seu resumo.txt
+    Média &  \\
+    Mínimo &  \\
+    Máximo &  \\
+    % etc, conforme seu resumo.txt
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \section{Figura}
-A seguir apresentamos a figura gerada pelo script \texttt{figura.R}:
 
-\begin{figure}[h]
+A Figura~\ref{fig:temperatura} foi gerada pelo script \texttt{figura.R} e mostra
+a variação da temperatura ao longo dos meses.
+
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{figura.pdf}
-  \caption{Temperatura ao longo dos meses}
+  \caption{Temperatura média (Temp) ao longo dos meses}
   \label{fig:temperatura}
 \end{figure}
 
-A Figura~\ref{fig:temperatura} mostra a variação da temperatura ao longo dos meses.
-É possível observar tendências, oscilações e possíveis padrões sazonais ao longo
-do período analisado.
+É possível observar tendências e variações sazonais na temperatura, com períodos
+de maior e menor aquecimento ao longo do ano.
 
 \section{Referências}
-\begin{thebibliography}{9}
 
-\bibitem{tdr}
-Fernando Mayer,
-\textit{Tecnologia de Dados},
-\url{https://fernandomayer.github.io/tdr/}
+Neste trabalho utilizamos o ambiente estatístico \citet{rcore}, que fornece
+ferramentas para análise de dados e geração de gráficos. A preparação deste
+documento foi feita em \LaTeX{}, conforme descrito em \citet{lamport1994}.
 
-\end{thebibliography}
+\bibliographystyle{plainnat}
+\bibliography{referencias}
+
+\section*{Declaração de uso de IA}
+
+Este relatório foi elaborado com apoio de ferramentas de inteligência artificial
+para organização do texto, revisão de estrutura e esclarecimento de dúvidas
+sobre o uso de \LaTeX{} e Git. Todas as decisões sobre conteúdo, interpretação
+dos resultados e escolha da variável \textbf{Temp} foram tomadas pelo autor,
+que também executou os comandos de linha de comando, gerou os arquivos
+\texttt{resumo.txt}, \texttt{figura.pdf} e \texttt{relatorio.pdf}, e realizou
+os commits e o envio ao repositório no GitHub.
 
 \end{document}
-
