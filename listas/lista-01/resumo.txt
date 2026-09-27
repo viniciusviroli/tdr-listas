@@ -1,8 +1,0 @@
-Coluna: "Temp"
-Observações: 153
-Valores NA: 0
-Mês 5: média 65.55 (31 dias)
-Mês 6: média 79.10 (30 dias)
-Mês 7: média 83.90 (31 dias)
-Mês 8: média 83.97 (31 dias)
-Mês 9: média 76.90 (30 dias)
