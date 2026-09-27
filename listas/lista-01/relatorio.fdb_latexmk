@@ -1,5 +1,13 @@
 # Fdb version 4
-["pdflatex"] 1790530563.89215 "relatorio.tex" "relatorio.pdf" "relatorio" 1790530564.40511 0
+["bibtex relatorio"] 1790534468.47639 "relatorio.aux" "relatorio.bbl" "relatorio" 1790534469.24593 0
+  "./referencias.bib" 1788395860 2054 6bd270131baf74298875fe3ff1e1848d ""
+  "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1790479836 26816 ffe5423d2019860bad9f54bc402fac15 ""
+  "relatorio.aux" 1790534468 1046 0b78d529f44c78aee77e5623e4a4614a "pdflatex"
+  (generated)
+  "relatorio.bbl"
+  "relatorio.blg"
+  (rewritten before read)
+["pdflatex"] 1790534468.54861 "relatorio.tex" "relatorio.pdf" "relatorio" 1790534469.24673 0
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1790479803 1004 54797486969f23fa377b128694d548df ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1790479751 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1790479751 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -24,8 +32,11 @@
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty" 1790479805 4474 e8e78ae89fe9e8de1decac472cd058c2 ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty" 1790479805 2444 7f0b8a693414aa18acf9a58b6c630be5 ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls" 1790479822 20144 e6010938fb17dfbae90a243ad7cf351d ""
+  "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty" 1790479822 5048 d19270c31bb8731a546f4e34e34d62fc ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo" 1790479822 8448 f7d8bfe7b7a3986fbf9022b21b7800cc ""
+  "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty" 1790479809 6078 f1cb470c9199e7110a27851508ed7a5c ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty" 1790479813 13886 d1306dcf79a944f6988e688c1785f9ce ""
+  "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty" 1790479815 6749 16d2656a1984957e674b149555f1ea1d ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graphics.cfg" 1790479817 1224 978390e9c2234eab29404bc21b268d1e ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def" 1790479817 19626 23e2822b9b2b5005f4c549ca98b9334d ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty" 1790479817 18585 02393ee85dc80955e05e568e02814a7c ""
@@ -34,14 +45,15 @@
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty" 1790479817 4023 5a4fcfe68d7c6df02f94d7bf578e99fd ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/l3backend-pdftex.def" 1790479821 31824 60c8410f6fc024f189369cb45fa634af ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg" 1790479823 678 4792914a8f45be57bb98413425e4c7af ""
-  "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty" 1790479844 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
+  "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty" 1790479836 45456 1c8843383c0bd05870c45fa0ebea6cc2 ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/web2c/texmf.cnf" 1790479742 43815 bcd8835056a2dfac260166a1c9541261 ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1790529871 94247 65ba3d3d1c505a9f879359be4d919bad ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-var/web2c/pdftex/pdflatex.fmt" 1790529929 2264065 377f7cc1f42043d8a967527e8d910abf ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf.cnf" 1790529525 956 69313aa9f050df65f9acc311b4262934 ""
-  "figura.pdf" 1789005642 5330 9db6a6c087a0ecfe6d514fef2f9a96b8 ""
-  "relatorio.aux" 1790530564 639 f4e66bb9c9a01bcb6aec28ce28309183 "pdflatex"
-  "relatorio.tex" 1790530342 1283 339ac8e70df996c19e77cc00a7dd1cd5 ""
+  "figura.pdf" 1790531934 5330 9db6a6c087a0ecfe6d514fef2f9a96b8 ""
+  "relatorio.aux" 1790534468 1046 0b78d529f44c78aee77e5623e4a4614a "pdflatex"
+  "relatorio.bbl" 1790534468 675 ac494b9a66cd6bbf89d5c02a612b3fd4 "bibtex relatorio"
+  "relatorio.tex" 1790534405 3138 220312dd9125f4aa1524960da226f4e9 ""
   (generated)
   "relatorio.aux"
   "relatorio.log"

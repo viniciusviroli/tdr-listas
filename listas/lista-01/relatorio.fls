@@ -9,6 +9,8 @@ INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.c
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size10.clo
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
@@ -33,8 +35,12 @@ INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
-INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
-INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/l3backend-pdftex.def
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel/l3backend-pdftex.def
 INPUT ./relatorio.aux
@@ -50,8 +56,8 @@ INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmr1
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT ./figura.pdf
@@ -60,8 +66,11 @@ INPUT ./figura.pdf
 INPUT ./figura.pdf
 OUTPUT relatorio.pdf
 INPUT ./figura.pdf
-INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT ./relatorio.bbl
+INPUT ./relatorio.bbl
+INPUT relatorio.bbl
+INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT relatorio.aux
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb

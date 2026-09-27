@@ -1,0 +1,6 @@
+Média: 77.88
+Mínimo: 56
+Máximo: 97
+Mediana: 78
+Observações válidas: 153
+Valores faltantes: 0
