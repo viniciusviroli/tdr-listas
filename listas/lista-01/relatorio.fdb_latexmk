@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex relatorio"] 1790534468.47639 "relatorio.aux" "relatorio.bbl" "relatorio" 1790534469.24593 0
+["bibtex relatorio"] 1790534468.47639 "relatorio.aux" "relatorio.bbl" "relatorio" 1790535155.92226 0
   "./referencias.bib" 1788395860 2054 6bd270131baf74298875fe3ff1e1848d ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1790479836 26816 ffe5423d2019860bad9f54bc402fac15 ""
-  "relatorio.aux" 1790534468 1046 0b78d529f44c78aee77e5623e4a4614a "pdflatex"
+  "relatorio.aux" 1790535155 1046 0b78d529f44c78aee77e5623e4a4614a "pdflatex"
   (generated)
   "relatorio.bbl"
   "relatorio.blg"
   (rewritten before read)
-["pdflatex"] 1790534468.54861 "relatorio.tex" "relatorio.pdf" "relatorio" 1790534469.24673 0
+["pdflatex"] 1790535155.21796 "relatorio.tex" "relatorio.pdf" "relatorio" 1790535155.92376 0
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1790479803 1004 54797486969f23fa377b128694d548df ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1790479751 1328 c834bbb027764024c09d3d2bf908b5f0 ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1790479751 1324 c910af8c371558dc20f2d7822f66fe64 ""
@@ -51,9 +51,9 @@
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-var/web2c/pdftex/pdflatex.fmt" 1790529929 2264065 377f7cc1f42043d8a967527e8d910abf ""
   "c:/Users/vinic/AppData/Roaming/TinyTeX/texmf.cnf" 1790529525 956 69313aa9f050df65f9acc311b4262934 ""
   "figura.pdf" 1790531934 5330 9db6a6c087a0ecfe6d514fef2f9a96b8 ""
-  "relatorio.aux" 1790534468 1046 0b78d529f44c78aee77e5623e4a4614a "pdflatex"
+  "relatorio.aux" 1790535155 1046 0b78d529f44c78aee77e5623e4a4614a "pdflatex"
   "relatorio.bbl" 1790534468 675 ac494b9a66cd6bbf89d5c02a612b3fd4 "bibtex relatorio"
-  "relatorio.tex" 1790534405 3138 220312dd9125f4aa1524960da226f4e9 ""
+  "relatorio.tex" 1790535015 3132 d82f15609aa43eb94dbaaf95a214677b ""
   (generated)
   "relatorio.aux"
   "relatorio.log"

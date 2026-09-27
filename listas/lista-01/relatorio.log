@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.27)  27 SEP 2026 15:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.27)  27 SEP 2026 15:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -173,12 +173,12 @@ Overfull \hbox (16.47116pt too wide) in paragraph at lines 41--43
 <figura.pdf, id=1, 505.89pt x 361.35pt>
 File: figura.pdf Graphic file (type pdf)
 <use figura.pdf>
-Package pdftex.def Info: figura.pdf  used on input line 68.
+Package pdftex.def Info: figura.pdf  used on input line 70.
 (pdftex.def)             Requested size: 276.00105pt x 197.14412pt.
 [1
 
 {c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (0.11055pt too wide) in paragraph at lines 78--81
+Overfull \hbox (0.11055pt too wide) in paragraph at lines 80--83
 \OT1/cmr/m/n/10 Neste tra-balho uti-lizamos o am-bi-ente es-tat^^S^^Pstico R Core Team [2026], que fornece
  []
 
@@ -196,13 +196,13 @@ L3 programming layer <2026-09-09>
 Here is how much of TeX's memory you used:
  2268 strings out of 469040
  35018 string characters out of 5455509
- 447792 words of memory out of 5000000
+ 448792 words of memory out of 5000000
  31406 multiletter control sequences out of 15000+600000
  630967 words of font info for 49 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  57i,8n,65p,226b,238s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/Users/vinic/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on relatorio.pdf (3 pages, 138070 bytes).
+Output written on relatorio.pdf (3 pages, 138731 bytes).
 PDF statistics:
  79 PDF objects out of 1000 (max. 8388607)
  49 compressed objects within 1 object stream
