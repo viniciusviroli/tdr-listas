@@ -1,0 +1,158 @@
+---
+title: "Viagens nas estações de bicicletas compartilhadas"
+author: "Vinicius Viroli Pereira"
+lang: pt-BR
+format:
+  html:
+    self-contained: true
+execute:
+  echo: true    
+---
+
+# Exercício 1 — O documento e a leitura
+
+Antes de realizar a leitura no R, inspecionei manualmente os arquivos usando `head` e `file`. A partir dessa inspeção, identifiquei:
+
+## Arquivo cadastro.csv
+- Separador de campos: ";"
+- Separador decimal: não se aplica (não há decimais)
+- Codificação: Latin1 (caracteres acentuados aparecem quebrados)
+- Marca de ausência: não há
+- Tipos das colunas:
+  - codigo: caractere
+  - nome: caractere
+  - entorno: caractere
+  - vagas: inteiro
+
+## Arquivo viagens_2023.csv
+- Separador de campos: ";"
+- Separador decimal: não se aplica
+- Codificação: Latin1
+- Marca de ausência: "-"
+- Tipos das colunas:
+  - codigo: caractere
+  - jan a dez: numéricas, com "-" representando ausência (NA)
+  
+## Arquivo viagens_2024.csv
+- Separador de campos: `;`
+- Separador decimal: não se aplica
+- Codificação: Latin1
+- Marca de ausência: "-"
+- Tipos das colunas:
+  - codigo: caractere
+  - jan a dez: numéricas, com "-" representando ausência (NA)
+
+## Arquivo viagens_2025.csv
+- Separador de campos: `;`
+- Separador decimal: não se aplica
+- Codificação: Latin1
+- Marca de ausência: "-"
+- Tipos das colunas:
+  - codigo: caractere
+  - jan a dez: numéricas, com "-" representando ausência (NA)
+  
+
+## Leitura dos arquivos no R
+
+```{r}
+library(readr)
+
+cadastro <- read_delim(
+  "dados/cadastro.csv",
+  delim = ";",
+  locale = locale(encoding = "Latin1"),
+  col_types = cols(
+    codigo = col_character(),
+    nome = col_character(),
+    entorno = col_character(),
+    vagas = col_integer()
+  )
+)
+
+viagens_2023 <- read_delim(
+  "dados/viagens_2023.csv",
+  delim = ";",
+  locale = locale(encoding = "Latin1"),
+  na = "-",
+  col_types = cols(
+    codigo = col_character(),
+    jan = col_double(),
+    fev = col_double(),
+    mar = col_double(),
+    abr = col_double(),
+    mai = col_double(),
+    jun = col_double(),
+    jul = col_double(),
+    ago = col_double(),
+    set = col_double(),
+    out = col_double(),
+    nov = col_double(),
+    dez = col_double()
+  )
+)
+
+viagens_2024 <- read_delim(
+  "dados/viagens_2024.csv",
+  delim = ";",
+  locale = locale(encoding = "Latin1"),
+  na = "-",
+  col_types = cols(
+    codigo = col_character(),
+    jan = col_double(),
+    fev = col_double(),
+    mar = col_double(),
+    abr = col_double(),
+    mai = col_double(),
+    jun = col_double(),
+    jul = col_double(),
+    ago = col_double(),
+    set = col_double(),
+    out = col_double(),
+    nov = col_double(),
+    dez = col_double()
+  )
+)
+
+viagens_2025 <- read_delim(
+  "dados/viagens_2025.csv",
+  delim = ";",
+  locale = locale(encoding = "Latin1"),
+  na = "-",
+  col_types = cols(
+    codigo = col_character(),
+    jan = col_double(),
+    fev = col_double(),
+    mar = col_double(),
+    abr = col_double(),
+    mai = col_double(),
+    jun = col_double(),
+    jul = col_double(),
+    ago = col_double(),
+    set = col_double(),
+    out = col_double(),
+    nov = col_double(),
+    dez = col_double()
+  )
+)
+```
+
+## Conferindo a acentuação correta das unidades (estações) e NA's no lugar de "-"
+
+Após usar a função read_delim() com o argumento locale = locale(encoding = "Latin1"), observa-se que as estações ficam acentuadas corretamente:
+
+```{r}
+cadastro$nome
+```
+
+As colunas do arquivo viagens_2023 possuem os seguintes tipos e quantidades de NA's contabilizadas:
+```{r}
+
+spec(viagens_2023)
+
+```
+
+Cada "-" foi contabilizado como NA, e o código a seguir mostra a quantidade de NA's por mês do arquivo viagens_2023.
+
+```{r}
+colSums(is.na(viagens_2023))
+```
