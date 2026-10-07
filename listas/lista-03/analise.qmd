@@ -5,6 +5,7 @@ lang: pt-BR
 format:
   html:
     self-contained: true
+    toc: true
 execute:
   echo: true    
 ---
@@ -54,7 +55,7 @@ Antes de realizar a leitura no R, inspecionei manualmente os arquivos usando `he
 
 ## Leitura dos arquivos no R
 
-```{r}
+```{r eval=TRUE}
 library(readr)
 
 cadastro <- read_delim(
@@ -140,12 +141,12 @@ viagens_2025 <- read_delim(
 
 Após usar a função read_delim() com o argumento locale = locale(encoding = "Latin1"), observa-se que as estações ficam acentuadas corretamente:
 
-```{r}
+```{r eval=TRUE}
 cadastro$nome
 ```
 
 As colunas do arquivo viagens_2023 possuem os seguintes tipos e quantidades de NA's contabilizadas:
-```{r}
+```{r eval=TRUE}
 
 spec(viagens_2023)
 
@@ -153,6 +154,74 @@ spec(viagens_2023)
 
 Cada "-" foi contabilizado como NA, e o código a seguir mostra a quantidade de NA's por mês do arquivo viagens_2023.
 
-```{r}
+```{r eval=TRUE}
 colSums(is.na(viagens_2023))
 ```
+
+# Exercício 2 - Arrumar a tabela
+
+Considerando o arquivo viagens_2023.csv, a tabela anual tem o mês nos nomes de doze colunas, mas os meses deveriam ser tratados como variáveis. Deseja-se converter a tabela para a forma longa, com uma linha por unidade e mês, e dar à coluna de valores o nome do que ela mede. 
+
+Portanto, os objetivos deste exercício são:
+
+- transformar a tabela do primeiro ano (2023) para o formato longo;
+- criar uma coluna mês e uma coluna viagens;
+- Dar à coluna de valores o nome do que ela mede e trazer os nomes das unidades, não apenas os códigos;
+- ordenar o mês como fator seguindo o calendário;
+- contar o número de linhas da tabela longa;
+- contar quantos valores estão ausentes.
+
+
+
+```{r eval=TRUE}
+library(dplyr)
+library(tidyr)
+library(forcats)
+
+# Ordem correta dos meses
+ordem_meses <- c(
+  "jan", "fev", "mar", "abr", "mai", "jun",
+  "jul", "ago", "set", "out", "nov", "dez"
+)
+
+viagens_2023_long <- viagens_2023 |>
+  pivot_longer(
+    cols = jan:dez,
+    names_to = "mes",
+    values_to = "viagens"
+  ) |>
+  mutate(
+    mes = factor(mes, levels = ordem_meses)
+  ) |>
+  left_join(cadastro, by = "codigo") |>
+  select(codigo, nome, mes, viagens)
+
+viagens_2023_long
+
+```
+
+## Conferências obrigatórias
+
+Segundo o LEIA-ME.txt, temos:
+
+- unidades com medições: 8.
+- unidades no cadastro: 9.
+- meses sem registro em 2023: 4.
+
+Portanto, a tabela longa deve ter 8 × 12 = 96 linhas e 4 valores ausentes.
+
+### Número de linhas da tabela longa
+```{r eval=TRUE}
+nrow(viagens_2023_long)
+```
+
+### Número de valores ausentes
+
+```{r eval=TRUE}
+sum(is.na(viagens_2023_long$viagens))
+```
+
+
+
+
+
