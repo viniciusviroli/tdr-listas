@@ -160,7 +160,7 @@ colSums(is.na(viagens_2023))
 
 # Exercício 2 - Arrumar a tabela
 
-Considerando o arquivo viagens_2023.csv, a tabela anual tem o mês nos nomes de doze colunas, mas os meses deveriam ser tratados como variáveis. Deseja-se converter a tabela para a forma longa, com uma linha por unidade e mês, e dar à coluna de valores o nome do que ela mede. 
+Considerando o arquivo viagens_2023.csv, a tabela anual tem o mês nos nomes de doze colunas, mas os meses deveriam ser tratados como variáveis. Desejamos converter a tabela para a forma longa, com uma linha por unidade e mês, e dar à coluna de valores o nome do que ela mede. 
 
 Portanto, os objetivos deste exercício são:
 
@@ -187,6 +187,7 @@ ordem_meses <- c(
   "jul", "ago", "set", "out", "nov", "dez"
 )
 
+# Pivot_longer, mutate e factor, seguidos de left join
 viagens_2023_long <- viagens_2023 |>
   pivot_longer(
     cols = jan:dez,
@@ -266,6 +267,100 @@ Como o cadastro possui 9 unidades e a tabela de medições possui 8, existe uma 
 unidade_sem_medicao <- cadastro |>
   anti_join(viagens_2023, by = "codigo")
 
+unidade_sem_medicao
+
+```
+
+# Exercício 4 — Resumir por grupo
+
+Com "viagens_2023_join" do Exercício 3, produzimos dois resumos do ano: por unidade e por categoria.
+
+No tema desta lista (viagens em estações de bicicletas), um mês sem registro significa zero viagens naquele mês, e não ausência de informação estrutural. Portanto, antes de calcular totais e médias, substituímos NA por 0 somente na coluna de viagens e viagens_relativas. Essa decisão afeta:
+
+- o total anual (pois meses sem registro contam como zero);
+- a média mensal da medida relativa.
+
+Mas não afeta:
+
+- o número de meses com registro (que continua contando apenas meses não‑NA); 
+- as colunas do cadastro.
+
+```{r eval=TRUE}
+viagens_2023_clean <- viagens_2023_join |>
+  mutate(
+    viagens = replace_na(viagens, 0),
+    viagens_relativas = replace_na(viagens_relativas, 0)
+  )
+viagens_2023_clean
+```
+
+## Resumo por unidade
+
+Para cada unidade, calculamos:
+
+- meses_com_registro: número de meses originalmente registrados;
+- total_ano: soma das viagens no ano;
+- media_relativa: média mensal da medida relativa;
+- nome e categoria da unidade.
+
+E ordenamos da maior média relativa para a menor:
+
+```{r eval=TRUE}
+resumo_unidade <- viagens_2023_join |>
+  group_by(codigo, nome, entorno) |>
+  summarise(
+    meses_com_registro = sum(!is.na(viagens)),
+    total_ano = sum(replace_na(viagens, 0)),
+    media_relativa = mean(replace_na(viagens_relativas, 0)),
+    .groups = "drop"
+  ) |>
+  arrange(desc(media_relativa))
+
+resumo_unidade
+
+```
+
+## Resumo por categoria
+
+Para cada categoria, calculamos:
+
+- unidades_na_categoria;
+- total_ano_categoria;
+- media_relativa_categoria.
+
+```{r eval=TRUE}
+resumo_categoria <- viagens_2023_join |>
+  group_by(entorno) |>
+  summarise(
+    unidades_na_categoria = n_distinct(codigo),
+    total_ano_categoria = sum(replace_na(viagens, 0)),
+    media_relativa_categoria = mean(replace_na(viagens_relativas, 0)),
+    .groups = "drop"
+  )
+
+resumo_categoria
+
+```
+
+## Total do ano (em linha, com format())
+
+O total do ano é:
+```{r eval=TRUE}
+format(
+  sum(resumo_categoria$total_ano_categoria),
+  big.mark = ".",
+  decimal.mark = ","
+)
+
+```
+
+Esse valor é exatamente a “soma dos valores registrados” do primeiro ano (2023) relacionado no LEIA-ME.txt.
+
+## Unidade sem medição (confirmando o Exercício 3)
+
+A unidade sem medição é:
+
+```{r eval=TRUE}
 unidade_sem_medicao
 
 ```
