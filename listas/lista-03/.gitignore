@@ -1,0 +1,10 @@
+# HTML gerado
+analise.html
+
+# Diretório criado quando a renderização falha
+analise_files/
+
+# Arquivos temporários do R
+.Rhistory
+.RData
+.Rproj.user/
