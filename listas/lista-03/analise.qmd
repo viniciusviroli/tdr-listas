@@ -198,7 +198,7 @@ viagens_2023_long <- viagens_2023 |>
     mes = factor(mes, levels = ordem_meses)
   ) |>
   left_join(cadastro, by = "codigo") |>
-  select(codigo, nome, mes, viagens)
+  select(codigo, nome, entorno, vagas, mes, viagens)
 
 viagens_2023_long
 
@@ -233,8 +233,7 @@ A tabela longa contém apenas o código das unidades, enquanto as informações 
 A junção correta é um left join, pois queremos manter todas as linhas da tabela longa e trazer as colunas do cadastro.
 
 ```{r eval=TRUE}
-viagens_2023_join <- viagens_2023_long |>
-  left_join(cadastro, by = "codigo")
+viagens_2023_join <- viagens_2023_long
 
 ```
 
@@ -252,7 +251,8 @@ nrow(viagens_2023_join)
 
 Cada unidade tem um porte (vagas), e a medida relativa permite comparar unidades de tamanhos diferentes. Criamos então a variável:
 
-$$\texttt{viagens_relativas}=viagens/vagas$$
+$$\text{viagens\_relativas} = \frac{\text{viagens}}{\text{vagas}}$$
+
 ```{r eval=TRUE}
 viagens_2023_join <- viagens_2023_join |>
   mutate(viagens_relativas = viagens / vagas)
@@ -306,12 +306,12 @@ Para cada unidade, calculamos:
 E ordenamos da maior média relativa para a menor:
 
 ```{r eval=TRUE}
-resumo_unidade <- viagens_2023_join |>
+resumo_unidade <- viagens_2023_clean |>
   group_by(codigo, nome, entorno) |>
   summarise(
     meses_com_registro = sum(!is.na(viagens)),
-    total_ano = sum(replace_na(viagens, 0)),
-    media_relativa = mean(replace_na(viagens_relativas, 0)),
+    total_ano = sum(viagens),
+    media_relativa = mean(viagens_relativas),
     .groups = "drop"
   ) |>
   arrange(desc(media_relativa))
@@ -329,12 +329,12 @@ Para cada categoria, calculamos:
 - media_relativa_categoria.
 
 ```{r eval=TRUE}
-resumo_categoria <- viagens_2023_join |>
+resumo_categoria <- viagens_2023_clean |>
   group_by(entorno) |>
   summarise(
     unidades_na_categoria = n_distinct(codigo),
-    total_ano_categoria = sum(replace_na(viagens, 0)),
-    media_relativa_categoria = mean(replace_na(viagens_relativas, 0)),
+    total_ano_categoria = sum(viagens),
+    media_relativa_categoria = mean(viagens_relativas),
     .groups = "drop"
   )
 
@@ -364,4 +364,163 @@ A unidade sem medição é:
 unidade_sem_medicao
 
 ```
+
+# Exercício 5 — Todos os anos de uma vez
+
+Os três arquivos anuais (viagens_2023, viagens_2024 e viagens_2025) têm a mesma estrutura. Vamos lê‑los de uma vez usando map(), registrar de qual arquivo veio cada linha e criar a coluna ano a partir do nome do arquivo.
+
+## Leitura dos três arquivos com map()
+
+```{r eval=TRUE}
+
+library(purrr)
+
+arquivos <- list.files("dados", pattern = "viagens_20", full.names = TRUE)
+
+viagens_todos <- map_df(
+  arquivos,
+  ~ read_delim(
+      .x,
+      delim = ";",
+      locale = locale(encoding = "Latin1"),
+      na = "-",
+      col_types = cols(
+        codigo = col_character(),
+        jan = col_double(),
+        fev = col_double(),
+        mar = col_double(),
+        abr = col_double(),
+        mai = col_double(),
+        jun = col_double(),
+        jul = col_double(),
+        ago = col_double(),
+        set = col_double(),
+        out = col_double(),
+        nov = col_double(),
+        dez = col_double()
+      )
+    ) |>
+    mutate(origem = .x)
+)
+
+```
+
+O ano está no nome do arquivo, não dentro dele. Usamos parse_number() para extrair o primeiro número da coluna origem.
+
+```{r eval=TRUE}
+viagens_todos <- viagens_todos |>
+  mutate(ano = parse_number(origem))
+viagens_todos
+```
+
+Conferindo:
+
+```{r eval=TRUE}
+unique(viagens_todos$ano)
+```
+
+## Pivotar, ordenar o mês e juntar ao cadastro
+
+Aplicamos a mesma cadeia dos Exercícios 2 e 3.
+
+### Pivotamento e ordenação dos meses
+
+```{r eval=TRUE}
+
+viagens_todos_long <- viagens_todos |>
+  pivot_longer(
+    cols = jan:dez,
+    names_to = "mes",
+    values_to = "viagens"
+  ) |>
+  mutate(
+    mes = factor(
+      mes,
+      levels = c("jan","fev","mar","abr","mai","jun",
+                 "jul","ago","set","out","nov","dez")
+    )
+  )
+
+```
+
+
+### Junção ao cadastro
+
+```{r eval=TRUE}
+
+viagens_todos_join <- viagens_todos_long |>
+  left_join(cadastro, by = "codigo") |>
+  mutate(viagens_relativas = viagens / vagas)
+
+```
+
+### Conferência do número de linhas
+
+A tabela do Exercício 2 tinha 96 linhas. Agora temos 3 anos, então esperamos 96 × 3 = 288 linhas.
+
+```{r eval=TRUE}
+nrow(viagens_todos_join)
+
+```
+
+### Ajuste necessário
+
+A cadeia dos Exercícios 2 e 3 funciona para os três anos sem nenhuma alteração, porque:
+
+- os três arquivos têm exatamente a mesma estrutura;
+- os nomes das colunas são idênticos;
+- o cadastro é o mesmo para todos os anos;
+- a chave codigo funciona para todos os anos.
+
+Portanto, nenhum ajuste foi necessário além de criar a coluna ano. A cadeia dos Exercícios 2 e 3 funcionou sem alterações para os três anos; o único acréscimo foi a criação da coluna ano a partir do nome do arquivo.
+
+## Tabela de apresentação (categoria × ano)
+
+Agora queremos:
+
+- uma linha por categoria;
+- uma coluna por ano;
+- contendo o total anual de viagens por categoria.
+
+Isso exige o caminho inverso do pivot_longer (que é o pivot_wider()):
+
+```{r eval=TRUE}
+tabela_apresentacao <- viagens_todos_join |>
+  mutate(viagens = replace_na(viagens, 0)) |>
+  group_by(entorno, ano) |>
+  summarise(
+    total_ano = sum(viagens),
+    .groups = "drop"
+  ) |>
+  pivot_wider(
+    names_from = ano,
+    values_from = total_ano
+  )
+
+tabela_apresentacao
+
+```
+
+### Conferências com o LEIA-ME.txt
+
+O LEIA-ME fornece:
+
+- soma dos valores registrados por ano;
+- número de ausentes por ano;
+- totais por categoria.
+
+Conferência:
+
+```{r eval=TRUE}
+colSums(tabela_apresentacao[,-1])
+sum(viagens_todos_join$viagens, na.rm = TRUE)
+
+```
+
+Os valores das somas dos registros por ano (2023, 2024 e 2025) coincidem com os três totais anuais apresentados no LEIA-ME.txt.
+
+
+
+
+
 
