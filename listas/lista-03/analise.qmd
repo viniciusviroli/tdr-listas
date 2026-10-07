@@ -174,7 +174,10 @@ Portanto, os objetivos deste exercício são:
 
 
 ```{r eval=TRUE}
-library(dplyr)
+suppressMessages({
+  library(dplyr)
+})
+
 library(tidyr)
 library(forcats)
 
@@ -220,8 +223,50 @@ nrow(viagens_2023_long)
 ```{r eval=TRUE}
 sum(is.na(viagens_2023_long$viagens))
 ```
+# Exercício 3 — Juntar ao cadastro
 
+A tabela longa contém apenas o código das unidades, enquanto as informações de categoria e porte estão no cadastro. Neste exercício, juntamos as duas tabelas pela chave comum (codigo), mantendo todas as linhas da tabela longa. A junção (join) deve manter exatamente o mesmo número de linhas da tabela longa (96 linhas), e uma unidade do cadastro não possui medição alguma.
 
+## Junção da tabela longa com o cadastro
 
+A junção correta é um left join, pois queremos manter todas as linhas da tabela longa e trazer as colunas do cadastro.
 
+```{r eval=TRUE}
+viagens_2023_join <- viagens_2023_long |>
+  left_join(cadastro, by = "codigo")
+
+```
+
+## Conferência do número de linhas
+
+A junção não deve alterar o número de linhas.
+
+```{r eval=TRUE}
+nrow(viagens_2023_long)
+nrow(viagens_2023_join)
+
+```
+
+## Criação da medida relativa
+
+Cada unidade tem um porte (vagas), e a medida relativa permite comparar unidades de tamanhos diferentes. Criamos então a variável:
+
+$$\texttt{viagens_relativas}=viagens/vagas$$
+```{r eval=TRUE}
+viagens_2023_join <- viagens_2023_join |>
+  mutate(viagens_relativas = viagens / vagas)
+viagens_2023_join
+```
+
+## Unidade sem medição
+
+Como o cadastro possui 9 unidades e a tabela de medições possui 8, existe uma unidade sem qualquer registro. Identificamos essa unidade com uma junção filtrante:
+
+```{r eval=TRUE}
+unidade_sem_medicao <- cadastro |>
+  anti_join(viagens_2023, by = "codigo")
+
+unidade_sem_medicao
+
+```
 
