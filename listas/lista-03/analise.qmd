@@ -1,0 +1,526 @@
+---
+title: "Viagens nas estações de bicicletas compartilhadas"
+author: "Vinicius Viroli Pereira"
+lang: pt-BR
+format:
+  html:
+    self-contained: true
+    toc: true
+execute:
+  echo: true    
+---
+
+# Exercício 1 — O documento e a leitura
+
+Antes de realizar a leitura no R, inspecionei manualmente os arquivos usando `head` e `file`. A partir dessa inspeção, identifiquei:
+
+## Arquivo cadastro.csv
+- Separador de campos: ";"
+- Separador decimal: não se aplica (não há decimais)
+- Codificação: Latin1 (caracteres acentuados aparecem quebrados)
+- Marca de ausência: não há
+- Tipos das colunas:
+  - codigo: caractere
+  - nome: caractere
+  - entorno: caractere
+  - vagas: inteiro
+
+## Arquivo viagens_2023.csv
+- Separador de campos: ";"
+- Separador decimal: não se aplica
+- Codificação: Latin1
+- Marca de ausência: "-"
+- Tipos das colunas:
+  - codigo: caractere
+  - jan a dez: numéricas, com "-" representando ausência (NA)
+  
+## Arquivo viagens_2024.csv
+- Separador de campos: `;`
+- Separador decimal: não se aplica
+- Codificação: Latin1
+- Marca de ausência: "-"
+- Tipos das colunas:
+  - codigo: caractere
+  - jan a dez: numéricas, com "-" representando ausência (NA)
+
+## Arquivo viagens_2025.csv
+- Separador de campos: `;`
+- Separador decimal: não se aplica
+- Codificação: Latin1
+- Marca de ausência: "-"
+- Tipos das colunas:
+  - codigo: caractere
+  - jan a dez: numéricas, com "-" representando ausência (NA)
+  
+
+## Leitura dos arquivos no R
+
+```{r eval=TRUE}
+library(readr)
+
+cadastro <- read_delim(
+  "dados/cadastro.csv",
+  delim = ";",
+  locale = locale(encoding = "Latin1"),
+  col_types = cols(
+    codigo = col_character(),
+    nome = col_character(),
+    entorno = col_character(),
+    vagas = col_integer()
+  )
+)
+
+viagens_2023 <- read_delim(
+  "dados/viagens_2023.csv",
+  delim = ";",
+  locale = locale(encoding = "Latin1"),
+  na = "-",
+  col_types = cols(
+    codigo = col_character(),
+    jan = col_double(),
+    fev = col_double(),
+    mar = col_double(),
+    abr = col_double(),
+    mai = col_double(),
+    jun = col_double(),
+    jul = col_double(),
+    ago = col_double(),
+    set = col_double(),
+    out = col_double(),
+    nov = col_double(),
+    dez = col_double()
+  )
+)
+
+viagens_2024 <- read_delim(
+  "dados/viagens_2024.csv",
+  delim = ";",
+  locale = locale(encoding = "Latin1"),
+  na = "-",
+  col_types = cols(
+    codigo = col_character(),
+    jan = col_double(),
+    fev = col_double(),
+    mar = col_double(),
+    abr = col_double(),
+    mai = col_double(),
+    jun = col_double(),
+    jul = col_double(),
+    ago = col_double(),
+    set = col_double(),
+    out = col_double(),
+    nov = col_double(),
+    dez = col_double()
+  )
+)
+
+viagens_2025 <- read_delim(
+  "dados/viagens_2025.csv",
+  delim = ";",
+  locale = locale(encoding = "Latin1"),
+  na = "-",
+  col_types = cols(
+    codigo = col_character(),
+    jan = col_double(),
+    fev = col_double(),
+    mar = col_double(),
+    abr = col_double(),
+    mai = col_double(),
+    jun = col_double(),
+    jul = col_double(),
+    ago = col_double(),
+    set = col_double(),
+    out = col_double(),
+    nov = col_double(),
+    dez = col_double()
+  )
+)
+```
+
+## Conferindo a acentuação correta das unidades (estações) e NA's no lugar de "-"
+
+Após usar a função read_delim() com o argumento locale = locale(encoding = "Latin1"), observa-se que as estações ficam acentuadas corretamente:
+
+```{r eval=TRUE}
+cadastro$nome
+```
+
+As colunas do arquivo viagens_2023 possuem os seguintes tipos e quantidades de NA's contabilizadas:
+```{r eval=TRUE}
+
+spec(viagens_2023)
+
+```
+
+Cada "-" foi contabilizado como NA, e o código a seguir mostra a quantidade de NA's por mês do arquivo viagens_2023.
+
+```{r eval=TRUE}
+colSums(is.na(viagens_2023))
+```
+
+# Exercício 2 - Arrumar a tabela
+
+Considerando o arquivo viagens_2023.csv, a tabela anual tem o mês nos nomes de doze colunas, mas os meses deveriam ser tratados como variáveis. Desejamos converter a tabela para a forma longa, com uma linha por unidade e mês, e dar à coluna de valores o nome do que ela mede. 
+
+Portanto, os objetivos deste exercício são:
+
+- transformar a tabela do primeiro ano (2023) para o formato longo;
+- criar uma coluna mês e uma coluna viagens;
+- Dar à coluna de valores o nome do que ela mede e trazer os nomes das unidades, não apenas os códigos;
+- ordenar o mês como fator seguindo o calendário;
+- contar o número de linhas da tabela longa;
+- contar quantos valores estão ausentes.
+
+
+
+```{r eval=TRUE}
+suppressMessages({
+  library(dplyr)
+})
+
+library(tidyr)
+library(forcats)
+
+# Ordem correta dos meses
+ordem_meses <- c(
+  "jan", "fev", "mar", "abr", "mai", "jun",
+  "jul", "ago", "set", "out", "nov", "dez"
+)
+
+# Pivot_longer, mutate e factor, seguidos de left join
+viagens_2023_long <- viagens_2023 |>
+  pivot_longer(
+    cols = jan:dez,
+    names_to = "mes",
+    values_to = "viagens"
+  ) |>
+  mutate(
+    mes = factor(mes, levels = ordem_meses)
+  ) |>
+  left_join(cadastro, by = "codigo") |>
+  select(codigo, nome, entorno, vagas, mes, viagens)
+
+viagens_2023_long
+
+```
+
+## Conferências obrigatórias
+
+Segundo o LEIA-ME.txt, temos:
+
+- unidades com medições: 8.
+- unidades no cadastro: 9.
+- meses sem registro em 2023: 4.
+
+Portanto, a tabela longa deve ter 8 × 12 = 96 linhas e 4 valores ausentes.
+
+### Número de linhas da tabela longa
+```{r eval=TRUE}
+nrow(viagens_2023_long)
+```
+
+### Número de valores ausentes
+
+```{r eval=TRUE}
+sum(is.na(viagens_2023_long$viagens))
+```
+# Exercício 3 — Juntar ao cadastro
+
+A tabela longa contém apenas o código das unidades, enquanto as informações de categoria e porte estão no cadastro. Neste exercício, juntamos as duas tabelas pela chave comum (codigo), mantendo todas as linhas da tabela longa. A junção (join) deve manter exatamente o mesmo número de linhas da tabela longa (96 linhas), e uma unidade do cadastro não possui medição alguma.
+
+## Junção da tabela longa com o cadastro
+
+A junção correta é um left join, pois queremos manter todas as linhas da tabela longa e trazer as colunas do cadastro.
+
+```{r eval=TRUE}
+viagens_2023_join <- viagens_2023_long
+
+```
+
+## Conferência do número de linhas
+
+A junção não deve alterar o número de linhas.
+
+```{r eval=TRUE}
+nrow(viagens_2023_long)
+nrow(viagens_2023_join)
+
+```
+
+## Criação da medida relativa
+
+Cada unidade tem um porte (vagas), e a medida relativa permite comparar unidades de tamanhos diferentes. Criamos então a variável:
+
+$$\text{viagens\_relativas} = \frac{\text{viagens}}{\text{vagas}}$$
+
+```{r eval=TRUE}
+viagens_2023_join <- viagens_2023_join |>
+  mutate(viagens_relativas = viagens / vagas)
+viagens_2023_join
+```
+
+## Unidade sem medição
+
+Como o cadastro possui 9 unidades e a tabela de medições possui 8, existe uma unidade sem qualquer registro. Identificamos essa unidade com uma junção filtrante:
+
+```{r eval=TRUE}
+unidade_sem_medicao <- cadastro |>
+  anti_join(viagens_2023, by = "codigo")
+
+unidade_sem_medicao
+
+```
+
+# Exercício 4 — Resumir por grupo
+
+Com "viagens_2023_join" do Exercício 3, produzimos dois resumos do ano: por unidade e por categoria.
+
+No tema desta lista (viagens em estações de bicicletas), um mês sem registro significa zero viagens naquele mês, e não ausência de informação estrutural. Portanto, antes de calcular totais e médias, substituímos NA por 0 somente na coluna de viagens e viagens_relativas. Essa decisão afeta:
+
+- o total anual (pois meses sem registro contam como zero);
+- a média mensal da medida relativa.
+
+Mas não afeta:
+
+- o número de meses com registro (que continua contando apenas meses não‑NA); 
+- as colunas do cadastro.
+
+```{r eval=TRUE}
+viagens_2023_clean <- viagens_2023_join |>
+  mutate(
+    viagens = replace_na(viagens, 0),
+    viagens_relativas = replace_na(viagens_relativas, 0)
+  )
+viagens_2023_clean
+```
+
+## Resumo por unidade
+
+Para cada unidade, calculamos:
+
+- meses_com_registro: número de meses originalmente registrados;
+- total_ano: soma das viagens no ano;
+- media_relativa: média mensal da medida relativa;
+- nome e categoria da unidade.
+
+E ordenamos da maior média relativa para a menor:
+
+```{r eval=TRUE}
+resumo_unidade <- viagens_2023_clean |>
+  group_by(codigo, nome, entorno) |>
+  summarise(
+    meses_com_registro = sum(!is.na(viagens)),
+    total_ano = sum(viagens),
+    media_relativa = mean(viagens_relativas),
+    .groups = "drop"
+  ) |>
+  arrange(desc(media_relativa))
+
+resumo_unidade
+
+```
+
+## Resumo por categoria
+
+Para cada categoria, calculamos:
+
+- unidades_na_categoria;
+- total_ano_categoria;
+- media_relativa_categoria.
+
+```{r eval=TRUE}
+resumo_categoria <- viagens_2023_clean |>
+  group_by(entorno) |>
+  summarise(
+    unidades_na_categoria = n_distinct(codigo),
+    total_ano_categoria = sum(viagens),
+    media_relativa_categoria = mean(viagens_relativas),
+    .groups = "drop"
+  )
+
+resumo_categoria
+
+```
+
+## Total do ano (em linha, com format())
+
+O total do ano é:
+```{r eval=TRUE}
+format(
+  sum(resumo_categoria$total_ano_categoria),
+  big.mark = ".",
+  decimal.mark = ","
+)
+
+```
+
+Esse valor é exatamente a “soma dos valores registrados” do primeiro ano (2023) relacionado no LEIA-ME.txt.
+
+## Unidade sem medição (confirmando o Exercício 3)
+
+A unidade sem medição é:
+
+```{r eval=TRUE}
+unidade_sem_medicao
+
+```
+
+# Exercício 5 — Todos os anos de uma vez
+
+Os três arquivos anuais (viagens_2023, viagens_2024 e viagens_2025) têm a mesma estrutura. Vamos lê‑los de uma vez usando map(), registrar de qual arquivo veio cada linha e criar a coluna ano a partir do nome do arquivo.
+
+## Leitura dos três arquivos com map()
+
+```{r eval=TRUE}
+
+library(purrr)
+
+arquivos <- list.files("dados", pattern = "viagens_20", full.names = TRUE)
+
+viagens_todos <- map_df(
+  arquivos,
+  ~ read_delim(
+      .x,
+      delim = ";",
+      locale = locale(encoding = "Latin1"),
+      na = "-",
+      col_types = cols(
+        codigo = col_character(),
+        jan = col_double(),
+        fev = col_double(),
+        mar = col_double(),
+        abr = col_double(),
+        mai = col_double(),
+        jun = col_double(),
+        jul = col_double(),
+        ago = col_double(),
+        set = col_double(),
+        out = col_double(),
+        nov = col_double(),
+        dez = col_double()
+      )
+    ) |>
+    mutate(origem = .x)
+)
+
+```
+
+O ano está no nome do arquivo, não dentro dele. Usamos parse_number() para extrair o primeiro número da coluna origem.
+
+```{r eval=TRUE}
+viagens_todos <- viagens_todos |>
+  mutate(ano = parse_number(origem))
+viagens_todos
+```
+
+Conferindo:
+
+```{r eval=TRUE}
+unique(viagens_todos$ano)
+```
+
+## Pivotar, ordenar o mês e juntar ao cadastro
+
+Aplicamos a mesma cadeia dos Exercícios 2 e 3.
+
+### Pivotamento e ordenação dos meses
+
+```{r eval=TRUE}
+
+viagens_todos_long <- viagens_todos |>
+  pivot_longer(
+    cols = jan:dez,
+    names_to = "mes",
+    values_to = "viagens"
+  ) |>
+  mutate(
+    mes = factor(
+      mes,
+      levels = c("jan","fev","mar","abr","mai","jun",
+                 "jul","ago","set","out","nov","dez")
+    )
+  )
+
+```
+
+
+### Junção ao cadastro
+
+```{r eval=TRUE}
+
+viagens_todos_join <- viagens_todos_long |>
+  left_join(cadastro, by = "codigo") |>
+  mutate(viagens_relativas = viagens / vagas)
+
+```
+
+### Conferência do número de linhas
+
+A tabela do Exercício 2 tinha 96 linhas. Agora temos 3 anos, então esperamos 96 × 3 = 288 linhas.
+
+```{r eval=TRUE}
+nrow(viagens_todos_join)
+
+```
+
+### Ajuste necessário
+
+A cadeia dos Exercícios 2 e 3 funciona para os três anos sem nenhuma alteração, porque:
+
+- os três arquivos têm exatamente a mesma estrutura;
+- os nomes das colunas são idênticos;
+- o cadastro é o mesmo para todos os anos;
+- a chave codigo funciona para todos os anos.
+
+Portanto, nenhum ajuste foi necessário além de criar a coluna ano. A cadeia dos Exercícios 2 e 3 funcionou sem alterações para os três anos; o único acréscimo foi a criação da coluna ano a partir do nome do arquivo.
+
+## Tabela de apresentação (categoria × ano)
+
+Agora queremos:
+
+- uma linha por categoria;
+- uma coluna por ano;
+- contendo o total anual de viagens por categoria.
+
+Isso exige o caminho inverso do pivot_longer (que é o pivot_wider()):
+
+```{r eval=TRUE}
+tabela_apresentacao <- viagens_todos_join |>
+  mutate(viagens = replace_na(viagens, 0)) |>
+  group_by(entorno, ano) |>
+  summarise(
+    total_ano = sum(viagens),
+    .groups = "drop"
+  ) |>
+  pivot_wider(
+    names_from = ano,
+    values_from = total_ano
+  )
+
+tabela_apresentacao
+
+```
+
+### Conferências com o LEIA-ME.txt
+
+O LEIA-ME fornece:
+
+- soma dos valores registrados por ano;
+- número de ausentes por ano;
+- totais por categoria.
+
+Conferência:
+
+```{r eval=TRUE}
+colSums(tabela_apresentacao[,-1])
+sum(viagens_todos_join$viagens, na.rm = TRUE)
+
+```
+
+Os valores das somas dos registros por ano (2023, 2024 e 2025) coincidem com os três totais anuais apresentados no LEIA-ME.txt.
+
+
+
+
+
+
